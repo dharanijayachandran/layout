@@ -1,0 +1,62 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!-- begin #page-container -->
+<ng-container *ngIf="!sidebarMenuFlag&&topMenu">
+  <script>
+  //  console.log("Inside top menu");
+    </script>
+  <div id="page-container" class="page-without-sidebar page-header-fixed page-with-top-menu" [ngClass]="{
+    'has-scroll' : pageHasScroll,
+    'page-sidebar-minified': pageSettings.pageSidebarMinified,
+    'page-with-footer': pageSettings.pageWithFooter,
+    'page-content-full-height': pageSettings.pageContentFullHeight,
+    'page-without-sidebar': pageSettings.pageWithoutSidebar,
+    'page-with-right-sidebar': pageSettings.pageSidebarRight,
+    'page-with-two-sidebar': pageSettings.pageSidebarTwo,
+    'page-with-wide-sidebar': pageSettings.pageSidebarWide,
+    'page-right-sidebar-collapsed': pageSettings.pageSidebarRightCollapsed,
+    'page-with-light-sidebar': pageSettings.pageSidebarLight,
+    'page-with-top-menu': pageSettings.pageTopMenu,
+    'page-sidebar-toggled': pageSettings.pageMobileSidebarToggled,
+    'page-right-sidebar-toggled': pageSettings.pageMobileRightSidebarToggled,
+    'p-0': pageSettings.pageEmpty
+  }">
+  
+  <topMenu *ngIf="pageSettings.pageTopMenu && !pageSettings.pageEmpty"></topMenu>
+  
+  <header (toggleSidebarRightCollapsed)="onToggleSidebarRight($event)" (toggleMobileSidebar)="onToggleMobileSidebar($event)" (toggleMobileRightSidebar)="onToggleMobileRightSidebar($event)" [pageSidebarTwo]="pageSettings.pageSidebarTwo" *ngIf="!pageSettings.pageEmpty"></header>
+  <footer *ngIf="pageSettings.pageWithFooter"></footer>
+  </div>
+</ng-container>
+<ng-container *ngIf="sidebarMenuFlag&&!topMenu">
+  <script>
+    console.log("Inside sidebar menu");
+    </script>
+  <div id="page-container" class="page-container fade page-sidebar-fixed page-header-fixed show" [ngClass]="{
+    'has-scroll' : pageHasScroll,
+    'page-sidebar-minified': pageSettings.pageSidebarMinified,
+    'page-with-footer': pageSettings.pageWithFooter,
+    'page-content-full-height': pageSettings.pageContentFullHeight,
+    'page-without-sidebar': pageSettings.pageWithoutSidebar,
+    'page-with-right-sidebar': pageSettings.pageSidebarRight,
+    'page-with-two-sidebar': pageSettings.pageSidebarTwo,
+    'page-with-wide-sidebar': pageSettings.pageSidebarWide,
+    'page-right-sidebar-collapsed': pageSettings.pageSidebarRightCollapsed,
+    'page-with-light-sidebar': pageSettings.pageSidebarLight,
+    'page-with-top-menu': pageSettings.pageTopMenu,
+    'page-sidebar-toggled': pageSettings.pageMobileSidebarToggled,
+    'page-right-sidebar-toggled': pageSettings.pageMobileRightSidebarToggled,
+    'p-0': pageSettings.pageEmpty
+  }">
+  
+  
+  <header (toggleSidebarRightCollapsed)="onToggleSidebarRight($event)" (toggleMobileSidebar)="onToggleMobileSidebar($event)" (toggleMobileRightSidebar)="onToggleMobileRightSidebar($event)" [pageSidebarTwo]="pageSettings.pageSidebarTwo" *ngIf="!pageSettings.pageEmpty"></header>
+  
+  <sidebar (toggleSidebarMinified)="onToggleSidebarMinified($event)" (hideMobileSidebar)="onHideMobileSidebar($event)" *ngIf="!pageSettings.pageWithoutSidebar && !pageSettings.pageEmpty" [pageSidebarTransparent]="pageSettings.pageSidebarTransparent" [pageSidebarMinified]="pageSettings.pageSidebarMinified"></sidebar>
+  
+  <sidebar-right (hideMobileRightSidebar)="onHideMobileRightSidebar($event)" *ngIf="pageSettings.pageSidebarTwo && !pageSettings.pageEmpty"></sidebar-right>
+  
+  <footer *ngIf="pageSettings.pageWithFooter"></footer>
+  </div>
+</ng-container>
+
+<!-- end #page-container -->

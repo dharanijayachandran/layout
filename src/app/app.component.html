@@ -1,0 +1,15 @@
+<app-navigation-layout (toggle)="gettingToggleStatus($event)"></app-navigation-layout>
+<ng-container *ngIf="topMenu">
+    <div id="containerTop" #topMenu style="height: calc(100% - 50px);" >
+        <router-outlet> 
+            <!-- <layout-routing-to-login></layout-routing-to-login> -->
+        </router-outlet>
+    </div>
+</ng-container>
+<ng-container *ngIf="sidebarMenuFlag">
+    <div class="content bodyContainer position-relative overflow-auto" id="containerTop" #sideMenu style="height: calc(100% - 50px);" >
+        <router-outlet>
+            <!-- <layout-routing-to-login></layout-routing-to-login> -->
+        </router-outlet>
+    </div>
+</ng-container>

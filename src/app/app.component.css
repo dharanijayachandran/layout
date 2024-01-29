@@ -1,0 +1,8 @@
+.content {
+    margin-left: 232px;
+    padding: 0px;
+}
+
+div.content.show {
+    margin-left: 60px;
+}

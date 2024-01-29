@@ -1,0 +1,95 @@
+<style>
+  .headerListBand {
+    background-color: #4B545B;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    color: white;
+  }
+</style>
+
+<!-- begin #sidebar -->
+
+<div id="sidebar" class="sidebar responsive-menu" ngResizable [rzHandles]="'n,e,s,w,sw,ne,nw'"
+  [rzMinWidth]="rzMinWidthSidebar" (rzStart)="onResizeStart($event)" (rzResizing)="onResizing($event)"
+  (rzStop)="onResizeStop($event)" [ngClass]="{ 'sidebar-transparent': this.pageSidebarTransparent}">
+  <!--  responsive-search-background  -->
+  <div class="sideBarSearchWithReset">
+    <!-- <div class="sidebarInputFieldBackground"></div> -->
+    <div class="d-flex justify-content-between align-items-center ml-2">
+      <div class="pr-2 f-1 py-1"> <!--  responsive-search-background -->
+        <div class="position-relative">
+          <input #searchfield class="sidebarInputField m-input mt-0 sideBarBgColor sidebarInput"
+            (input)="filterChanged($event.target.value)" [value]="searchValue" placeholder="&#xf002;" />
+          <span *ngIf="searchClearIcon" class="input-group-addon inputWithIconRight"
+            (click)="searchfield.value='';clearSearch()"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+      </div>
+      <div *ngIf="sidebarResizeReset">
+        <a href="javascript:;" class="position-relative custom_undo" matTooltip="Click to Reset Sidebar"
+          (click)="defaultSidebarWidth()">
+          <i class="fa fa-undo" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="path mb-0" style="border-bottom:solid 1px #336494"></div>
+  <!-- begin sidebar scrollbar -->
+  <div class="overflow-scroll height-full ps position-relative" appScrollbarDirective #sidebarScrollbar
+    *ngIf="desktopMode" (scroll)="onScroll($event)">
+    <ng-container *ngTemplateOutlet="sidebarNav"></ng-container>
+  </div>
+  <div class="mobile-scroll" style="position: fixed; z-index: -999;" *ngIf="mobileMode" (scroll)="onScroll($event)" appScrollbarDirective #sidebarScrollbar>
+    <ng-container *ngTemplateOutlet="sidebarNav"></ng-container>
+  </div>
+  <!-- end sidebar scrollbar -->
+  <ng-template #sidebarNav>
+    <!-- begin sidebar user -->
+
+    <!-- end sidebar user -->
+    <!-- begin sidebar nav -->
+    <ul class="nav responsive-menu-list sidebarInputFieldBackground">
+
+      <!-- render menu item dynamically and reusable Template-->
+      <ng-template #sidebarMenu let-menu="menu">
+        <span class="badge pull-right" *ngIf="menu.badge">{{ menu.badge }}</span>
+        <b class="caret" *ngIf="menu.caret"></b>
+        <div class="icon-img" *ngIf="menu.img"><img src="{{ menu.img }}" /></div>
+        <i class="{{menu.iconName}}"></i>
+        <span *ngIf="menu.name">
+          {{ menu.name }}
+          <span class="label label-theme m-l-5" *ngIf="menu.label">{{ menu.label }}</span>
+          <span *ngIf="menu.menus.length > 0" class="menuItemsImge">
+            <img src="assets/img/action/dropdown.png" *ngIf="(menu.state != 'expand')" alt="arrow down"
+              class="pull-right" />
+            <img src="assets/img/action/up-arrow.png" *ngIf="(menu.state == 'expand')" alt="arrow up"
+              class="pull-right" />
+          </span>
+        </span>
+      </ng-template>
+
+      <!-- render submenu item -->
+      <!-- <ng-template #sidebarSubMenu let-menu="menu">
+        <i class="{{menu.iconName}}"></i>
+        <b class="caret pull-right" *ngIf="menu.caret"></b>
+        <span (click)="onMenuSelection()">{{ menu.name }}</span>
+        <i class="fa fa-paper-plane text-theme m-l-5" *ngIf="menu.highlight"></i>
+      </ng-template> -->
+
+      <!-- Side menu bar iteration -->
+      <app-menu-item *ngFor="let item of pagemenu" [menus]="pagemenu" [menuItem]="item"></app-menu-item>
+
+      <!-- begin sidebar minify button -->
+      <li><a href="javascript:;" class="sidebar-minify-btn" matTooltip="Click to {{expandCollpage}}"
+          (click)="toggleMinified()"><i class="fa fa-angle-double-left"></i></a></li>
+      <!-- end sidebar minify button -->
+    </ul>
+
+
+    <!-- end sidebar nav -->
+  </ng-template>
+</div>
+
+
+<!-- <div class="sidebar-bg"></div> -->
+<!-- end #sidebar -->

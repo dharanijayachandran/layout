@@ -1,0 +1,29 @@
+li.active>a, li.active>ul>li.active>a {
+    color: #0091ff;
+  }
+  
+  .page-sidebar-minified .sidebar .nav app-menu-item>li>a>span {
+    display: none;
+  }
+  
+  .page-sidebar-minified .sidebar .nav>app-menu-item>li:hover>div li a span {
+    display: inline-block;
+  }
+  
+  .page-sidebar-minified .sidebar .nav .sub-menu>li:first-child {
+    display: block;
+    background: #032d42;
+  }
+  
+  .page-sidebar-minified .sidebar .nav>app-menu-item>li>a {
+    padding: 10px 20px;
+  }
+  .mat-tooltip.tooltip-lightGray {
+    background: #336494;
+  }
+  .tooltip-lightGray {
+    background: #336494;
+  }
+  /* .page-sidebar-minified .sidebar .sub-menu .sub-menu li:first-child{
+    display: none!important;
+  } */

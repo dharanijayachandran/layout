@@ -1,0 +1,53 @@
+<li routerLinkActive="active" [class.active]="isActive" [hidden]="!menuItem.visible"
+    [ngClass]="{ 'expand': (menuItem.state == 'expand')}" #rla="routerLinkActive">
+
+    <a routerLinkActive="active" [routerLink]="[menuItem.pageUrl]" *ngIf="menuItem.pageUrl; else noLink"
+        matTooltip="{{menuItem.name}}" matTooltipClass="tooltip-lightGray" aria-label="Diaplay menu name"
+        [ngStyle]="changePaddingLeft(menuItem.level)"
+        (click)="(menuItem.menus) ? expandCollapseSubmenu(menuItem, menus, rla) : ''">
+        <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menuItem}"></ng-container>
+    </a>
+
+    <!--In case there is no link provided (has children)-->
+    <ng-template #noLink>
+        <a routerLinkActive="active" matTooltip="{{menuItem.name}}" matTooltipClass="tooltip-lightGray"
+            aria-label="Diaplay menu name" [ngStyle]="changePaddingLeft(menuItem.level)"
+            (click)="(menuItem.menus) ? expandCollapseSubmenu(menuItem, menus, rla) : ''">
+            <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menuItem}"></ng-container>
+        </a>
+    </ng-template>
+    <div [@expandCollapse]="(menuItem.state) ? menuItem.state : ((rla.isActive && !menuItem.state) ? 'active' : 'collapse')"
+        *ngIf="menuItem.menus && menuItem.menus.length >= 0">
+        <ul class="sub-menu" [ngStyle]="{'margin-top.px': (this.pageSettings.pageSidebarMinified) ? - (scrollTop) : 0 }"
+            [class.active]="isActive" routerLinkActive="active">
+            <li *ngIf="menuItem.level == 1">
+                <a>
+                    <span>{{menuItem.name}}</span>
+                </a>
+            </li>
+            <ng-container *ngIf="menuItem.menus && menuItem.menus.length > 0">
+                <app-menu-item [menuItem]="item" [menus]="menuItem.menus" (checkActive)="setActive()"
+                    *ngFor="let item of menuItem.menus">
+                </app-menu-item>
+            </ng-container>
+        </ul>
+    </div>
+</li>
+
+<!-- render menu item dynamically and reusable Template-->
+<ng-template #sidebarMenu let-menu="menu">
+    <span class="badge pull-right" *ngIf="menu.badge">{{ menu.badge }}</span>
+    <b class="caret" *ngIf="menu.caret"></b>
+    <div class="icon-img" *ngIf="menu.img"><img src="{{ menu.img }}" /></div>
+    <i class="{{menu.iconName}}"></i>
+    <span *ngIf="menu.name">
+        {{ menu.name }}
+        <span class="label label-theme m-l-5" *ngIf="menu.label">{{ menu.label }}</span>
+        <span *ngIf="menu.menus && menu.menus.length > 0" class="menuItemsImge">
+            <img src="/assets/img/action/dropdown.png" *ngIf="(menu.state != 'expand')" alt="arrow down"
+                class="pull-right" />
+            <img src="/assets/img/action/up-arrow.png" *ngIf="(menu.state == 'expand')" alt="arrow up"
+                class="pull-right" />
+        </span>
+    </span>
+</ng-template>

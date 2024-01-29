@@ -1,0 +1,25 @@
+@media screen and (min-device-width:320px) and (max-device-width:767px) {
+    .responsive-menu {
+      margin-top: 9rem;
+      padding-top: 0;
+    }
+
+    .responsive-menu-list {
+      margin-top: 50px;
+    }
+  }
+
+  .top-menu .nav .has-sub > ul.sub-menu li:first-child{
+    display: block;
+  }
+  .top-menu .nav .has-sub > ul.sub-menu {
+    background:none !important;
+    padding: 0px;
+  }
+  .top-menu .nav .has-sub > ul.sub-menu li {
+    background:#1a2229 !important;
+  }
+  .top-menu .nav>li.has-sub:hover>.sub-menu,
+	.top-menu .nav>li.has-sub:focus>.sub-menu {
+		display: block;
+	} 

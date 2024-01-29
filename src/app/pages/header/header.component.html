@@ -1,0 +1,172 @@
+<style>
+  .header .navbar-logo,
+  .login .login-header .brand .logo,
+  .header .navbar-nav>li .dropdown-toggle .label,
+  .header .navbar-nav>li>a .label,
+  .label.label-theme,
+  .btn.btn-scroll-to-top {
+    background: #ff5b57 !important;
+  }
+
+  .width_19px {
+    width: 19px;
+  }
+
+  /* Theme cahnge */
+  .themeChange-Cl .dropdown-item {
+    padding: 0px;
+  }
+
+  .themeChange-Cl .dropdown-item.active {
+    background: #b0b0b0;
+    color: black;
+  }
+</style>
+
+<!-- begin #header -->
+<div id="header" class="header navbar-default">
+  <!-- begin navbar-header -->
+  <div class="navbar-header">
+    <ng-container *ngIf="this.pageSidebarTwo">
+      <button type="button" class="navbar-toggle pull-left" (click)="mobileSidebarToggle()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <button type="button" class="navbar-toggle pull-right" (click)="mobileRightSidebarToggle()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </ng-container>
+    <a href="{{landingMenuUrl}}" class="navbar-brand">
+      <img src="/assets/img/logo/logo.png" alt="logo" style="margin-right: 5px;" />
+      <!-- <img [src]="singleimage" alt="logo" style="margin-right: 5px;" /> -->
+    </a>
+    <!--Search fields-->
+    <div class="navbar-nav header_search" style="display:none">
+      <li>
+        <div class="form-group">
+          <input type="text" class="form-control search_field" placeholder="Search" />
+        </div>
+      </li>
+    </div>
+
+
+    <button type="button" class="navbar-toggle p-0 m-r-0" (click)="mobileMegaMenuToggle()"
+      *ngIf="this.pageSettings.pageMegaMenu">
+      <span class="fa-stack fa-lg text-inverse m-t-2">
+        <i class="far fa-square fa-stack-2x"></i>
+        <i class="fa fa-cog fa-stack-1x"></i>
+      </span>
+    </button>
+
+  </div>
+  <!-- end navbar-header -->
+
+  <!-- begin header-nav -->
+  <ul class="navbar-nav navbar-right responsive-nav">
+    <li class="dropdown" ngbDropdown>
+      <a class="dropdown-toggle header_language d-flex align-items-center" matTooltip="Select Theme" ngbDropdownToggle>
+        <img src="/assets/img/themeSelection.png" class="width_19px mr-1">
+        <span class="d-inline-block themeNameStyle text-truncate">
+          {{selectedTheme}}
+        </span> <b class="caret"></b>
+      </a>
+
+      <ul class="dropdown-menu themeChange-Cl" ngbDropdownMenu>
+        <li *ngFor="let theme of themeNames" ngbDropdownItem [ngClass]="{'active': theme.isSelected == true}">
+          <a (click)="themeChange(theme)">{{theme.name}}</a>
+        </li>
+      </ul>
+    </li>
+
+    <li [ngClass]="[ (this.pageSettings.pageLanguageBar) ? 'hidden-xs' : '' ]" class="hidden">
+      <a href="#" class="search_field">
+        <button type="submit" class="btn btn-search"><i class="fa fa-search" style="font-size: 17px;"></i></button>
+      </a>
+    </li>
+    <!-- Home icon -->
+    <li>
+      <a href="{{landingMenuUrl}}" matTooltip="Home">
+        <i class="fas fa-home fa-fw"></i>
+      </a>
+    </li>
+
+    <li class="dropdown" ngbDropdown *ngIf="isI18nEnabled">
+      <a class="dropdown-toggle header_language" matTooltip="Select Language" id="header_language" ngbDropdownToggle>
+        {{selectedLanguage}} <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu" ngbDropdownMenu>
+        <li>
+          <a href="" name="en">{{selectedLanguageObj.en}}</a>
+        </li>
+        <li>
+          <a href="" name="hi">{{selectedLanguageObj.hi}}</a>
+        </li>
+        <li>
+          <a href="" name="ar">{{selectedLanguageObj.ar}}</a>
+        </li>
+      </ul>
+    </li>
+
+    <li style="cursor: default;">
+      <a href="javascript:;" style="padding: 18px 13px 0px;cursor: default;" (click)="navigateToAlarm()">
+        <i class="fa fa-bell" style="    cursor: default;"></i>
+        <span class="label">{{alarmCount}}</span>
+      </a>
+    </li>
+
+    <li class="dropdown navbar-user responsive" ngbDropdown>
+      <a href="javascript:;" class="dropdown-toggle userNameDispaly" ngbDropdownToggle style="padding-left:3px ;">
+        <span *ngIf="gender==='F'" class="resp-img">
+          <img src="/assets/img/user/female-avatar.jpg" alt="" />
+        </span>
+        <span *ngIf="gender==='M'" class="resp-img">
+          <img src="/assets/img/user/male_avatar.jpg" alt="" />
+        </span>
+        <span class="d-md-inline">{{firstName}} {{middleName}} {{lastName}}</span> <b class="caret resp-caret"></b>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+        <a [routerLink]="['user-config/profile']" class="dropdown-item">My Profile</a>
+        <a *ngIf="isChangePasswordEnabled" [routerLink]="['user-config/password-change']" class="dropdown-item">Change
+          Password</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="logout()">Log Out</a>
+      </div>
+    </li>
+    <li class="divider d-none d-md-block" *ngIf="this.pageSidebarTwo"></li>
+    <li class="d-none d-md-block" *ngIf="this.pageSidebarTwo">
+      <a href="javascript:;" (click)="toggleSidebarRight()" class="f-s-14">
+        <i class="fa fa-th"></i>
+      </a>
+    </li>
+  </ul>
+
+
+
+
+  <button type="button" class="navbar-toggle" (click)="mobileTopMenuToggle()"
+    style="margin: 0; position: static; float: left; padding-left: 1rem"
+    *ngIf="this.pageSettings.pageTopMenu && this.pageSettings.pageWithoutSidebar">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+
+  <button type="button" class="navbar-toggle " (click)="mobileSidebarToggle()"
+    style="margin: 0; position: static; float: left; padding-left: 1rem"
+    *ngIf="!this.pageSettings.pageSidebarTwo && !this.pageSettings.pageWithoutSidebar">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+
+
+
+
+  <!-- end header navigation right -->
+</div>
+<!-- end #header -->
+
+<!-- <app-modal-notification></app-modal-notification> -->
